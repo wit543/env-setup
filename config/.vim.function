@@ -1,0 +1,87 @@
+" Rule: echo 'yes'
+function! FirstLineCompile() 
+  if !empty(matchstr(getline(1), ':'))
+    let l:s = split(getline(1) , ':')
+  else
+    let l:s = ''
+  endif
+  if !empty(matchstr(l:s[0], 'Rule'))
+    let l:command = l:s[1]
+    cd %:p:h
+    let l:out = system(l:command)
+    try
+      cexpr l:out 
+    catch
+      "echo l:out
+    endtry
+    botright cwindow 8
+    echo 'Compiling finished!'
+  else
+    execute ':SCCompileRun'
+  endif
+endfunction 
+
+
+function! JumpThroughParameter(direction)
+  let flag = a:direction == 1 ? '' : 'b'
+
+  let s1 = searchpos('\S(\S', 'en' . flag, line('.'))
+  let s2 = searchpos(', \S', 'en' . flag, line('.'))
+  if s1 != [0, 0] && (s2 == [0, 0] || 
+        \ ((flag == '' && s1[1] < s2[1]) || (flag == 'b' && s1[1] > s2[1])) )
+    call search('\S(\S', 'e' . flag, line('.'))
+  else
+    call search(', \S', 'e' . flag, line('.'))
+  endif
+
+endfunction
+
+function! GrepCurrentDirectory(myParam)
+  execute "Rg " . a:myParam . " %:p:h/*"
+endfunction
+
+function! DelTagOfFile(file)
+  let fullpath = a:file
+  let cwd = getcwd()
+  let tagfilename = cwd . "/tags"
+  let f = substitute(fullpath, cwd . "/", "", "")
+  let f = escape(f, './')
+  let cmd = 'sed -i "/' . f . '/d" "' . tagfilename . '"'
+  let resp = system(cmd)
+endfunction
+
+function! UpdateTags()
+  let f = expand("%:p")
+  "let cwd = getcwd()
+  let cwd = expand("%:p:h")
+  let tagfilename = cwd . "/tags"
+  let cmd = 'ctags -a -f ' . tagfilename . ' --c++-kinds=+p --fields=+iaS --extra=+q ' . '"' . f . '"'
+  call DelTagOfFile(f)
+  let resp = system(cmd)
+endfunction
+
+function! SCPSourceFile() 
+  let dir = expand("%:p") 
+  let ldir = "/Users/supasorn/Research/"
+  let rdir = "/home/supasorn/research/"
+  if match(dir, ldir) == 0
+    let cmd = "scp " . expand("%:p") . " supasorn@174.21.163.107:" . substitute(expand("%:p"), ldir, rdir, "g")
+    echo cmd
+    let resp = system(cmd)
+    echo resp
+  endif
+endfunction 
+
+function! OpenRemoteOrLocal() 
+  let dir = expand("%:p:h") 
+  let ldir = "/home/supasorn/research/"
+  let rdir = "/homes/grail/supasorn/research/"
+  let scp = "scp://flatwhite.cs.washington.edu/"
+  if match(dir, ldir) == 0
+    let cmd = "e " . scp . substitute(expand("%:p"), ldir, rdir, "g")
+    execute cmd
+  elseif match(dir, "scp") == 0
+    let cmd = "e " . substitute(substitute(expand("%:p"), scp, "", "g"), rdir, ldir, "g")
+    execute cmd
+  endif
+endfunction 
