@@ -17,8 +17,8 @@ export ZSH="${omz/#\~/$HOME}"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
-ZSH_THEME="blinks"
-# ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="blinks"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -84,8 +84,8 @@ plugins=(
   extract
   docker
   docker-compose
-  zsh-syntax-highlighting
-  zsh-autosuggestions
+  # zsh-syntax-highlighting
+  # zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -226,6 +226,20 @@ else
 fi
 
 if [[ $OS == "Ubuntu" ]]; then
+
+  # Lib
+  export LD_LIBRARY_PATH="/usr/local/cuda/lib64":$LD_LIBRARY_PATH
+
+  # Path
+  export PATH=$PATH:~/go/bin
+  export PATH="/mnt/glacier/home/w/anaconda3/bin:$PATH"
+
+  # Alias
+  alias vi="nvim"
+  alias ssh139="ssh root@128.199.88.139"
+
+fi
+if [[ $OS == "Linux" ]]; then
 
   # Lib
   export LD_LIBRARY_PATH="/usr/local/cuda/lib64":$LD_LIBRARY_PATH
