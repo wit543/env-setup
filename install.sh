@@ -87,6 +87,7 @@ if [ ! -d "`echo ~`/anaconda3" ]; then
     rm Anaconda.sh
     export PATH="~/anaconda3/bin:$PATH"
     conda config --set auto_activate_base false
+    
 fi
 
 #Link config
@@ -107,6 +108,6 @@ ln -sf `pwd`/config/colors/gruvbox.vim ~/.vim/colors
 # Config VIM
 vim +PlugInstall +qall
 
-
+~/anaconda3/bin/conda init zsh
 
 zsh
