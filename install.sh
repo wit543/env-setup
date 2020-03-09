@@ -81,7 +81,7 @@ gitClone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 #INSTALL Anaconda
 echo "Installing Ananconda"
-if [ ! -d "~/anaconda3" ]; then
+if [ ! -d "`echo ~`/anaconda3" ]; then
     wget https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh -O Anaconda.sh
     sh Anaconda.sh -b
     rm Anaconda.sh
