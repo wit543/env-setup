@@ -4,3 +4,4 @@ wget
 curl
 neovim
 tmux
+expect
