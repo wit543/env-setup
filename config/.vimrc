@@ -41,10 +41,6 @@ Plug 'Shougo/neocomplcache'
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "endif
 
-" Vimtex
-
-Plug 'lervag/vimtex'
-
 Plug 'wesQ3/vim-windowswap'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'drmingdrmer/vim-toggle-quickfix'
@@ -358,3 +354,23 @@ augroup OpenAllFoldsOnFileOpen
     autocmd!
     autocmd BufRead * normal zR
 augroup END
+
+
+" Vimtex
+
+Plug 'lervag/vimtex'
+
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+
+Plug 'sirver/ultisnips'
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
+snippet today "Date"
+`date +%F`
+endsnippet
