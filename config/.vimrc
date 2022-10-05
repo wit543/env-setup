@@ -41,6 +41,9 @@ Plug 'Shougo/neocomplcache'
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "endif
 
+" Vimtex
+
+Plug 'lervag/vimtex'
 
 Plug 'wesQ3/vim-windowswap'
 Plug 'skywind3000/asyncrun.vim'
